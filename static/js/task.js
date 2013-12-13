@@ -94,9 +94,7 @@ var Instructions = function(pages) {
 var TestPhase = function () {
     // Globals
     var cardSelected = false;
-    var hiddenTime = 1000;
-    var trialDelay = 2500;
-    var trial = 1;
+    var trial = 0;
 
     // Work around for testing
     var trialType = 2;
@@ -104,10 +102,10 @@ var TestPhase = function () {
     // Function to generate numbers, stored in data
     var genNumbers = function() {
         data = {};
-        data['card1'] = Math.floor(Math.random()*11);
-        data['card2'] = Math.floor(Math.random()*11);
-        data['card3'] = Math.floor(Math.random()*11);
-        data['card4'] = Math.floor(Math.random()*11);
+        data['card1'] = Math.floor(Math.random()*51);
+        data['card2'] = Math.floor(Math.random()*51);
+        data['card3'] = Math.floor(Math.random()*51);
+        data['card4'] = Math.floor(Math.random()*51);
         return data;
     };
 
@@ -125,65 +123,77 @@ var TestPhase = function () {
     // Initialise cards
     setCards(data);
 
-
     var next = function() {
-        if (trial == 4) {
-            finish();
-        }
-        else {
-            // First thing, hide all cards
-            $('._card p').hide();
 
-            // When a card is selected
-            $('._card').click(function () {
-                // Get value of selection and refresh
-                if (cardSelected == false) {
-                    cardSelected = true;
+        // First thing, hide all cards
+        $('._card p').hide();
 
-                    // Show card picked
-                    var card = $(this).find('p', 'first');
-                    card.slideDown();
+        // When a card is selected
+        $('._card').click(function () {
+            // Get value of selection and refresh
+            if (cardSelected == false) {
+                cardSelected = true;
+
+                // Show card picked
+                var card = $(this).find('p', 'first');
+                card.slideDown();
+
+                // Update trial number
+                trial++;
+
+                // Record meta-information
+                data['card_chosen'] = parseInt(card.attr('id'));
+                data['trialType'] = trialType;
+                data['max'] = Math.max(data['card1'], data['card2'], data['card3'], data['card4']);
 
 
-                    // Condition 3: (show card picked) followed by all remaining, hidden cards
-                    if (trialType == 3) {
-                        $('._card :hidden').delay(hiddenTime).slideDown();
+                // Note: timings are not additive: all absolute and begin at 0
+                // Condition 1: unnecessary to code, (show card picked)
+                // Condition 2: (show card picked) and max alternative, wait hiddenTime
+                if (trialType == 2) {
+                    setTimeout(function() {
+                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']);
+                    }, 1000);
+
+                    setTimeout(function() {
+                        $('ul.list-unstyled li').hide();
+                    }, 2500);
+                }
+                // Condition 3: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
+                else if (trialType == 3) {
+                    setTimeout(function() {
+                        $('._card :hidden').slideDown();
+                    }, 1000);
+                }
+
+                // Add delay to trials
+                setTimeout(function () {
+
+                    // For testing- iterate through data and print to console OLD DATA
+                    for (var x in data) {
+                        console.log(x, data[x])
                     }
+                    console.log(trial);
 
-                    // Update trial number
-                    trial++;
 
                     // Create and assign new card values
-                    setTimeout(function () {
-                        data = genNumbers();
-                        data['card_chosen'] = card.attr('id');
-                        data['trialType'] = trialType;
-                        data['max'] = Math.max(data['card1'], data['card2'], data['card3'], data['card4'])
+                    data = genNumbers();
+                    setCards(data);
 
-                        setCards(data);
 
-                        // For testing- iterate through data and print to console
-                        for (var x in data) {
-                            console.log(x, data[x])
-                        }
-                        console.log(trial);
+                    // Re-hide all new cards
+                    $('._card p').hide();
 
-                        // Condition 1: unnecessary to code, (show card picked)
-                        // Condition 2: (show card picked) and max alternative
-                        if (trialType == 2) {
-                            $('ul.list-unstyled li').html('The maximum from the last trial was ' + data['max']);
-                        }
 
-                        // Re-hide all new cards
-                        $('._card p').hide();
+                    cardSelected = false;
 
-                        cardSelected = false;
-
-                    }, trialDelay);
-                }
-            });
-
-        }
+                }, 2500);
+            }
+            // Task finish condition
+            //if (trial == 4) {
+            //    finish();
+            //}
+        });
     };
 
     var finish = function() {
