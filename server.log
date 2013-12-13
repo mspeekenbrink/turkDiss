@@ -1,0 +1,89 @@
+2013-12-12 17:54:48,024 Exception in worker process:
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/arbiter.py", line 495, in spawn_worker
+    worker.init_process()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/workers/base.py", line 106, in init_process
+    self.wsgi = self.app.wsgi()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/app/base.py", line 114, in wsgi
+    self.callable = self.load()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/experiment_server.py", line 42, in load
+    return util.import_app("psiturk.experiment:app")
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/util.py", line 354, in import_app
+    __import__(module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/experiment.py", line 496, in <module>
+    init_db()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/db.py", line 22, in init_db
+    Base.metadata.create_all(bind=engine)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/schema.py", line 2848, in create_all
+    tables=tables)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1479, in _run_visitor
+    conn._run_visitor(visitorcallable, element, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1122, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/visitors.py", line 122, in traverse_single
+    return meth(obj, **kw)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/ddl.py", line 70, in visit_metadata
+    self.traverse_single(table, create_ok=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/visitors.py", line 122, in traverse_single
+    return meth(obj, **kw)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/ddl.py", line 89, in visit_table
+    self.connection.execute(schema.CreateTable(table))
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 662, in execute
+    params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 720, in _execute_ddl
+    compiled
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 874, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1024, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 196, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 867, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 324, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) table turkdemo already exists u'\nCREATE TABLE turkdemo (\n\tuniqueid VARCHAR(128) NOT NULL, \n\tassignmentid VARCHAR(128) NOT NULL, \n\tworkerid VARCHAR(128) NOT NULL, \n\thitid VARCHAR(128) NOT NULL, \n\tipaddress VARCHAR(128), \n\tbrowser VARCHAR(128), \n\tplatform VARCHAR(128), \n\tlanguage VARCHAR(128), \n\tcond INTEGER, \n\tcounterbalance INTEGER, \n\tcodeversion VARCHAR(128), \n\tbeginhit DATETIME, \n\tbeginexp DATETIME, \n\tendhit DATETIME, \n\tstatus INTEGER, \n\tdebriefed BOOLEAN, \n\tdatastring TEXT, \n\tPRIMARY KEY (uniqueid), \n\tCHECK (debriefed IN (0, 1))\n)\n\n' ()
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/arbiter.py", line 495, in spawn_worker
+    worker.init_process()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/workers/base.py", line 106, in init_process
+    self.wsgi = self.app.wsgi()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/app/base.py", line 114, in wsgi
+    self.callable = self.load()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/experiment_server.py", line 42, in load
+    return util.import_app("psiturk.experiment:app")
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/gunicorn/util.py", line 354, in import_app
+    __import__(module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/experiment.py", line 496, in <module>
+    init_db()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/db.py", line 22, in init_db
+    Base.metadata.create_all(bind=engine)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/schema.py", line 2848, in create_all
+    tables=tables)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1479, in _run_visitor
+    conn._run_visitor(visitorcallable, element, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1122, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/visitors.py", line 122, in traverse_single
+    return meth(obj, **kw)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/ddl.py", line 70, in visit_metadata
+    self.traverse_single(table, create_ok=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/visitors.py", line 122, in traverse_single
+    return meth(obj, **kw)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/ddl.py", line 89, in visit_table
+    self.connection.execute(schema.CreateTable(table))
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 662, in execute
+    params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 720, in _execute_ddl
+    compiled
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 874, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1024, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 196, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 867, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 324, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) table turkdemo already exists u'\nCREATE TABLE turkdemo (\n\tuniqueid VARCHAR(128) NOT NULL, \n\tassignmentid VARCHAR(128) NOT NULL, \n\tworkerid VARCHAR(128) NOT NULL, \n\thitid VARCHAR(128) NOT NULL, \n\tipaddress VARCHAR(128), \n\tbrowser VARCHAR(128), \n\tplatform VARCHAR(128), \n\tlanguage VARCHAR(128), \n\tcond INTEGER, \n\tcounterbalance INTEGER, \n\tcodeversion VARCHAR(128), \n\tbeginhit DATETIME, \n\tbeginexp DATETIME, \n\tendhit DATETIME, \n\tstatus INTEGER, \n\tdebriefed BOOLEAN, \n\tdatastring TEXT, \n\tPRIMARY KEY (uniqueid), \n\tCHECK (debriefed IN (0, 1))\n)\n\n' ()

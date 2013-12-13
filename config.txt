@@ -1,0 +1,43 @@
+[AWS Access]
+aws_access_key_id = YourAccessKeyId
+aws_secret_access_key = YourSecreteAccessKey
+
+[HIT Configuration]
+title = Stroop task
+description = Judge the color of a series of words.
+keywords = Perception, Psychology
+question_url = http://localhost:22362/mturk
+max_assignments = 10
+hit_lifetime = 24
+reward = 1
+duration = 2
+us_only = true
+approve_requirement = 95
+using_sandbox = True
+
+[Database Parameters]
+database_url = sqlite:///participants.db
+table_name = turkdemo
+
+[Server Parameters]
+host = localhost
+port = 22362
+cutoff_time = 30
+support_ie = true
+logfile = server.log
+loglevel = 2
+debug = true
+login_username = examplename
+login_pw = examplepassword
+num_workers = -1
+
+[Task Parameters]
+code_version = 1.0
+num_conds = 1
+num_counters = 1
+use_debriefing = true
+
+[Dashboard Parameters]
+login_username = 
+login_pw = 
+
