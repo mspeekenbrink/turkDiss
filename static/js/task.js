@@ -76,7 +76,7 @@ var Instructions = function(pages) {
 		// Record that the user has finished the instructions and 
 		// moved on to the experiment. This changes their status code
 		// in the database.
-		//psiTurk.finishInstructions();
+		psiTurk.finishInstructions();
 
 		// Move on to the experiment 
 		currentview = new TestPhase();
@@ -97,7 +97,7 @@ var TestPhase = function () {
     var trial = 0;
 
     // Work around for testing
-    var trialType = 2;
+    var condition= 2;
 
     // Function to generate numbers, stored in data
     var genNumbers = function() {
@@ -112,6 +112,7 @@ var TestPhase = function () {
     // Generate data
     data = genNumbers();
 
+
     // Function to set cards
     var setCards = function(data) {
         $('#1').html(data['card1']);
@@ -120,21 +121,19 @@ var TestPhase = function () {
         $('#4').html(data['card4']);
     };
 
-    console.log($('#1').html());
-    // Initialise cards
-    setCards(data);
-    console.log($('#1').html());
 
     var next = function() {
-
-        // First thing, hide all cards
-        $('._card p').hide();
 
         // When a card is selected
         $('._card').click(function () {
             // Get value of selection and refresh
             if (cardSelected == false) {
                 cardSelected = true;
+
+                // Initialise cards
+                if (trial == 0) {
+                    setCards(data);
+                }
 
                 // Show card picked
                 var card = $(this).find('p', 'first');
@@ -145,29 +144,32 @@ var TestPhase = function () {
 
                 // Record meta-information
                 data['card_chosen'] = parseInt(card.attr('id'));
-                data['trialType'] = trialType;
+                data['condition'] = condition;
                 data['max'] = Math.max(data['card1'], data['card2'], data['card3'], data['card4']);
+                data['trialNumber'] = trial;
 
 
                 // Note: timings are not additive: all absolute and begin at 0
                 // Condition 1: unnecessary to code, (show card picked)
                 // Condition 2: (show card picked) and max alternative, wait hiddenTime
-                if (trialType == 2) {
+                if (condition == 2) {
                     setTimeout(function() {
-                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']).slideDown()
-                            .delay(1500).slideUp();
+                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']).slideDown();
                     }, 1000);
-
-                    //setTimeout(function() {
-                    //    $('ul.list-unstyled li').hide();
-                    //}, 2500);
                 }
                 // Condition 3: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
-                else if (trialType == 3) {
+                else if (condition == 3) {
                     setTimeout(function() {
                         $('._card :hidden').slideDown();
                     }, 1000);
                 }
+
+                // Save data to psiTurk object
+                trialSet = [];
+                for (var x in data) {
+                        trialSet.push(data[x]);
+                    }
+                psiTurk.recordTrialData(trialSet);
 
                 // Add delay to trials
                 setTimeout(function () {
@@ -176,26 +178,25 @@ var TestPhase = function () {
                     for (var x in data) {
                         console.log(x, data[x])
                     }
-                    console.log(trial);
 
+                    // Re-hide all new cards and messages
+                    $('._card p').hide();
+                    $('ul.list-unstyled li').hide();
+
+                    // Task finish condition
+                    if (trial == 10) {
+                        psiTurk.saveData();
+                        finish();
+                    }
 
                     // Create and assign new card values
                     data = genNumbers();
                     setCards(data);
 
-
-                    // Re-hide all new cards
-                    $('._card p').hide();
-
-
                     cardSelected = false;
 
-                }, 2500);
+                }, 3000);
             }
-            // Task finish condition
-            //if (trial == 4) {
-            //    finish();
-            //}
         });
     };
 

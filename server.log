@@ -87,3 +87,42 @@ Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 324, in do_execute
     cursor.execute(statement, parameters)
 OperationalError: (OperationalError) table turkdemo already exists u'\nCREATE TABLE turkdemo (\n\tuniqueid VARCHAR(128) NOT NULL, \n\tassignmentid VARCHAR(128) NOT NULL, \n\tworkerid VARCHAR(128) NOT NULL, \n\thitid VARCHAR(128) NOT NULL, \n\tipaddress VARCHAR(128), \n\tbrowser VARCHAR(128), \n\tplatform VARCHAR(128), \n\tlanguage VARCHAR(128), \n\tcond INTEGER, \n\tcounterbalance INTEGER, \n\tcodeversion VARCHAR(128), \n\tbeginhit DATETIME, \n\tbeginexp DATETIME, \n\tendhit DATETIME, \n\tstatus INTEGER, \n\tdebriefed BOOLEAN, \n\tdatastring TEXT, \n\tPRIMARY KEY (uniqueid), \n\tCHECK (debriefed IN (0, 1))\n)\n\n' ()
+2013-12-14 13:46:22,346 Exception on /mturk [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/psiturk/experiment.py", line 220, in mturkroute
+    filter(Participant.workerid == workerId).\
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2535, in count
+    return self.from_self(col).scalar()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2341, in scalar
+    ret = self.one()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2310, in one
+    ret = list(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2353, in __iter__
+    return self._execute_and_instances(context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/query.py", line 2368, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 662, in execute
+    params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 761, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 874, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1024, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 196, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 867, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 324, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) no such table: turkdemo u'SELECT count(*) AS count_1 \nFROM (SELECT turkdemo.uniqueid AS turkdemo_uniqueid, turkdemo.assignmentid AS turkdemo_assignmentid, turkdemo.workerid AS turkdemo_workerid, turkdemo.hitid AS turkdemo_hitid, turkdemo.ipaddress AS turkdemo_ipaddress, turkdemo.browser AS turkdemo_browser, turkdemo.platform AS turkdemo_platform, turkdemo.language AS turkdemo_language, turkdemo.cond AS turkdemo_cond, turkdemo.counterbalance AS turkdemo_counterbalance, turkdemo.codeversion AS turkdemo_codeversion, turkdemo.beginhit AS turkdemo_beginhit, turkdemo.beginexp AS turkdemo_beginexp, turkdemo.endhit AS turkdemo_endhit, turkdemo.status AS turkdemo_status, turkdemo.debriefed AS turkdemo_debriefed, turkdemo.datastring AS turkdemo_datastring \nFROM turkdemo \nWHERE turkdemo.assignmentid != ? AND turkdemo.workerid = ?) AS anon_1' (u'debug1387028782289', u'debug1387028782289')
