@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d314895f-058b-4e37-b139-43adaf65d550" name="Default" comment="">
+    <list default="true" id="d314895f-058b-4e37-b139-43adaf65d550" name="Default" comment="Fixed Max message. Timing still faulty- need to reset to 0 after each trial. Need to add save data.">
       <change type="DELETED" beforePath="$PROJECT_DIR$/../WebInterface/static/css/bootstrap-theme.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../WebInterface/static/css/bootstrap-theme.min.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../WebInterface/static/css/bootstrap.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../WebInterface/static/css/bootstrap.min.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../WebInterface/static/css/styles.css" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/participants.db" afterPath="$PROJECT_DIR$/participants.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/styles.css" afterPath="$PROJECT_DIR$/static/css/styles.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/task.js" afterPath="$PROJECT_DIR$/static/js/task.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../WebInterface/templates/view_index.html" afterPath="$PROJECT_DIR$/../WebInterface/templates/view_index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="turkDiss.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1386958456283" ignored="false" />
+    <file path="/Dummy.txt" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1387025184503" ignored="false" />
     <file path="/test.html" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1386872765045" ignored="false" />
-    <file path="/task.js" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1386957965061" ignored="false" />
+    <file path="/task.js" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1387024508179" ignored="false" />
     <file path="/actions.js" changelist="d314895f-058b-4e37-b139-43adaf65d550" time="1386867508624" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,10 +56,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="styles.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/css/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="8" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
+            <state line="24" column="74" selection-start="546" selection-end="546" vertical-scroll-proportion="0.4090909">
               <folding />
             </state>
           </provider>
@@ -83,10 +85,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="task.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="task.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/task.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="180" column="35" selection-start="4716" selection-end="4716" vertical-scroll-proportion="0.80968857">
+            <state line="141" column="0" selection-start="3097" selection-end="3097" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -388,12 +390,16 @@
       <created>1386958459795</created>
       <updated>1386958459795</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fixed a great deal, max message still not showing after first trial (maybe timing?). Need to add save data. Added finish condition.">
+      <created>1386958496565</created>
+      <updated>1386958496565</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="945" y="22" width="974" height="1028" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -579,19 +585,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="8" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/task.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="180" column="35" selection-start="4716" selection-end="4716" vertical-scroll-proportion="0.80968857">
+        <state line="141" column="0" selection-start="3097" selection-end="3097" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="74" selection-start="546" selection-end="546" vertical-scroll-proportion="0.4090909">
+          <folding />
         </state>
       </provider>
     </entry>

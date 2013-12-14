@@ -120,8 +120,10 @@ var TestPhase = function () {
         $('#4').html(data['card4']);
     };
 
+    console.log($('#1').html());
     // Initialise cards
     setCards(data);
+    console.log($('#1').html());
 
     var next = function() {
 
@@ -152,12 +154,13 @@ var TestPhase = function () {
                 // Condition 2: (show card picked) and max alternative, wait hiddenTime
                 if (trialType == 2) {
                     setTimeout(function() {
-                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']);
+                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']).slideDown()
+                            .delay(1500).slideUp();
                     }, 1000);
 
-                    setTimeout(function() {
-                        $('ul.list-unstyled li').hide();
-                    }, 2500);
+                    //setTimeout(function() {
+                    //    $('ul.list-unstyled li').hide();
+                    //}, 2500);
                 }
                 // Condition 3: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
                 else if (trialType == 3) {
