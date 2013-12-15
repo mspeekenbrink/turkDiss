@@ -94,10 +94,10 @@ var Instructions = function(pages) {
 var TestPhase = function () {
     // Globals
     var cardSelected = false;
-    var trial = 0;
+    var trial =0;
 
     // Work around for testing
-    var condition= 2;
+    var condition= 3;
 
     // Function to generate numbers, stored in data
     var genNumbers = function() {
@@ -109,9 +109,14 @@ var TestPhase = function () {
         return data;
     };
 
-    // Generate data
-    data = genNumbers();
-
+    var genBlanks = function() {
+        data = {};
+        data['card1'] = 0;
+        data['card2'] = 0;
+        data['card3'] = 0;
+        data['card4'] = 0;
+        return data;
+    };
 
     // Function to set cards
     var setCards = function(data) {
@@ -120,7 +125,6 @@ var TestPhase = function () {
         $('#3').html(data['card3']);
         $('#4').html(data['card4']);
     };
-
 
     var next = function() {
 
@@ -131,9 +135,8 @@ var TestPhase = function () {
                 cardSelected = true;
 
                 // Initialise cards
-                if (trial == 0) {
-                    setCards(data);
-                }
+                data = genNumbers();
+                setCards(data);
 
                 // Show card picked
                 var card = $(this).find('p', 'first');
@@ -144,10 +147,10 @@ var TestPhase = function () {
 
                 // Record meta-information
                 data['card_chosen'] = parseInt(card.attr('id'));
-                data['condition'] = condition;
+                data['chosen_value'] = parseInt($('#' + data['card_chosen']).html());
                 data['max'] = Math.max(data['card1'], data['card2'], data['card3'], data['card4']);
                 data['trialNumber'] = trial;
-
+                data['condition'] = condition;
 
                 // Note: timings are not additive: all absolute and begin at 0
                 // Condition 1: unnecessary to code, (show card picked)
@@ -183,15 +186,15 @@ var TestPhase = function () {
                     $('._card p').hide();
                     $('ul.list-unstyled li').hide();
 
+                    // Create and assign new card values
+                    data = genBlanks();
+                    setCards(data);
+
                     // Task finish condition
                     if (trial == 10) {
                         psiTurk.saveData();
                         finish();
                     }
-
-                    // Create and assign new card values
-                    data = genNumbers();
-                    setCards(data);
 
                     cardSelected = false;
 
