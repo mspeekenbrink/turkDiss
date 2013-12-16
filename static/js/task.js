@@ -94,10 +94,9 @@ var Instructions = function(pages) {
 var TestPhase = function () {
     // Globals
     var cardSelected = false;
-    var trial =0;
-
-    // Work around for testing
-    var condition= 3;
+    var trial = 0;
+    var maxTrial = 5;
+    var condition= psiTurk.taskdata.get('condition');
 
     // Function to generate numbers, stored in data
     var genNumbers = function() {
@@ -109,6 +108,7 @@ var TestPhase = function () {
         return data;
     };
 
+    // Function used to clear p tags to prevent cheating
     var genBlanks = function() {
         data = {};
         data['card1'] = 0;
@@ -153,15 +153,15 @@ var TestPhase = function () {
                 data['condition'] = condition;
 
                 // Note: timings are not additive: all absolute and begin at 0
-                // Condition 1: unnecessary to code, (show card picked)
-                // Condition 2: (show card picked) and max alternative, wait hiddenTime
-                if (condition == 2) {
+                // Condition 0: unnecessary to code, (show card picked)
+                // Condition 1: (show card picked) and max alternative, wait hiddenTime
+                if (condition == 1) {
                     setTimeout(function() {
                         $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']).slideDown();
                     }, 1000);
                 }
-                // Condition 3: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
-                else if (condition == 3) {
+                // Condition 2: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
+                else if (condition == 2) {
                     setTimeout(function() {
                         $('._card :hidden').slideDown();
                     }, 1000);
@@ -191,7 +191,7 @@ var TestPhase = function () {
                     setCards(data);
 
                     // Task finish condition
-                    if (trial == 10) {
+                    if (trial == maxTrial) {
                         psiTurk.saveData();
                         finish();
                     }

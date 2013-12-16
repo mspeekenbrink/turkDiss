@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../WebInterface/.idea/WebInterface.iml" filepath="$PROJECT_DIR$/../WebInterface/.idea/WebInterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/turkDiss.iml" filepath="$PROJECT_DIR$/.idea/turkDiss.iml" />
     </modules>
   </component>

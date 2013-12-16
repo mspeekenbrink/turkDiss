@@ -4,51 +4,29 @@ html, body {
     height: 100%;
 }
 
-@media screen and (max-width: 1024px) {
-    ._card {
-        height: 150px;
-        width: 15%;
-        background: #ececec;
-        box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
-        margin: 5%;
-        padding: 5%;
-    }
-
-    p {
-        display: none; /* Hides the element til we're ready to show it' */
-        font-size: 300% !important;
-        padding-top: 33%;
-        text-align: center;
-    }
-
-    li {
-        display: none; /* Hides the element til we're ready to show it' */
-        font-size: 300%;
-        padding-top: 2%;
-        text-align: center;
-    }
+._card {
+    width: 25%;
+    height: 300px;
+    background: #ececec;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
+    margin-top: 10%;
 }
 
-@media screen and (min-width: 1024px) {
-    ._card {
-        width: 25%;
-        height: 300px;
-        background: #ececec;
-        box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
-        margin-top: 10%;
-    }
+p {
+    display: none; /* Hides the element til we're ready to show it' */
+    font-size: 550% !important;
+    padding-top: 33%;
+    text-align: center;
+}
 
-    p {
-        display: none; /* Hides the element til we're ready to show it' */
-        font-size: 550% !important;
-        padding-top: 33%;
-        text-align: center;
-    }
+li {
+    display: none; /* Hides the element til we're ready to show it' */
+    font-size: 500%;
+    padding-top: 2%;
+    text-align: center;
+}
 
-    li {
-        display: none; /* Hides the element til we're ready to show it' */
-        font-size: 500%;
-        padding-top: 2%;
-        text-align: center;
-    }
+h1 {
+    font-size: 50px;
+    margin-top: 50px;
 }

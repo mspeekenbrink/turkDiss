@@ -3,9 +3,9 @@ aws_access_key_id = YourAccessKeyId
 aws_secret_access_key = YourSecreteAccessKey
 
 [HIT Configuration]
-title = Stroop task
-description = Judge the color of a series of words.
-keywords = Perception, Psychology
+title = Bandit task
+description = Choose optimal cards to obtain the highest reward.
+keywords = Judgement, Psychology
 question_url = http://localhost:22362/mturk
 max_assignments = 10
 hit_lifetime = 24
@@ -16,7 +16,7 @@ approve_requirement = 95
 using_sandbox = True
 
 [Database Parameters]
-database_url = sqlite:///participants.db
+database_url = mysql://root:PASSWORD@127.0.0.1/init
 table_name = turkdemo
 
 [Server Parameters]
@@ -33,7 +33,7 @@ num_workers = -1
 
 [Task Parameters]
 code_version = 1.0
-num_conds = 1
+num_conds = 3
 num_counters = 1
 use_debriefing = true
 
