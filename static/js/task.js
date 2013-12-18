@@ -91,39 +91,40 @@ var Instructions = function(pages) {
 * BANDIT TEST       *
 ********************/
 
-var TestPhase = function () {
+var TestPhase = function() {
     // Globals
     var cardSelected = false;
-    var trial = 0;
+    var trial = 1;
     var maxTrial = 5;
     var condition= psiTurk.taskdata.get('condition');
 
     // Function to generate numbers, stored in data
     var genNumbers = function() {
-        data = {};
-        data['card1'] = Math.floor(Math.random()*51);
-        data['card2'] = Math.floor(Math.random()*51);
-        data['card3'] = Math.floor(Math.random()*51);
-        data['card4'] = Math.floor(Math.random()*51);
-        return data;
+        data[trial] = {};
+        data[trial]['card1'] = Math.floor(Math.random()*51);
+        data[trial]['card2'] = Math.floor(Math.random()*51);
+        data[trial]['card3'] = Math.floor(Math.random()*51);
+        data[trial]['card4'] = Math.floor(Math.random()*51);
+        return data[trial];
     };
 
-    // Function used to clear p tags to prevent cheating
+    // Function used to clear p tags to prevent cheating. Do not clear data entirely-
+    // need record of previous trial for random walk
     var genBlanks = function() {
-        data = {};
-        data['card1'] = 0;
-        data['card2'] = 0;
-        data['card3'] = 0;
-        data['card4'] = 0;
+        data[trial] = {};
+        data[trial]['card1'] = 0;
+        data[trial]['card2'] = 0;
+        data[trial]['card3'] = 0;
+        data[trial]['card4'] = 0;
         return data;
     };
 
     // Function to set cards
-    var setCards = function(data) {
-        $('#1').html(data['card1']);
-        $('#2').html(data['card2']);
-        $('#3').html(data['card3']);
-        $('#4').html(data['card4']);
+    var setCards = function(values) {
+        $('#1').html(values['card1']);
+        $('#2').html(values['card2']);
+        $('#3').html(values['card3']);
+        $('#4').html(values['card4']);
     };
 
     var next = function() {
@@ -135,29 +136,26 @@ var TestPhase = function () {
                 cardSelected = true;
 
                 // Initialise cards
-                data = genNumbers();
-                setCards(data);
+                data[trial] = genNumbers();
+                setCards(data[trial]);
 
                 // Show card picked
                 var card = $(this).find('p', 'first');
                 card.slideDown();
 
-                // Update trial number
-                trial++;
-
                 // Record meta-information
-                data['card_chosen'] = parseInt(card.attr('id'));
-                data['chosen_value'] = parseInt($('#' + data['card_chosen']).html());
-                data['max'] = Math.max(data['card1'], data['card2'], data['card3'], data['card4']);
-                data['trialNumber'] = trial;
-                data['condition'] = condition;
+                data[trial]['chosen_card'] = parseInt(card.attr('id'));
+                data[trial]['chosen_value'] = parseInt($('#' + data[trial]['chosen_card']).html());
+                data[trial]['max_value'] = Math.max(data[trial]['card1'], data[trial]['card2'], data[trial]['card3'], data[trial]['card4']);
+                data[trial]['trialNumber'] = trial;
+                data[trial]['condition'] = condition;
 
                 // Note: timings are not additive: all absolute and begin at 0
                 // Condition 0: unnecessary to code, (show card picked)
                 // Condition 1: (show card picked) and max alternative, wait hiddenTime
                 if (condition == 1) {
                     setTimeout(function() {
-                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data['max']).slideDown();
+                        $('ul.list-unstyled li').html('The maximum from this trial was ' + data[trial]['max_value']).slideDown();
                     }, 1000);
                 }
                 // Condition 2: (show card picked) followed by all remaining, hidden cards. Wait hiddenTime
@@ -169,32 +167,37 @@ var TestPhase = function () {
 
                 // Save data to psiTurk object
                 trialSet = [];
-                for (var x in data) {
-                        trialSet.push(data[x]);
+                for (var x in data[trial]) {
+                        trialSet.push(data[trial][x]);
                     }
                 psiTurk.recordTrialData(trialSet);
 
+                // Forgone code
                 // Add delay to trials
                 setTimeout(function () {
 
+                    // REMOVE BEFORE GOING LIVE
                     // For testing- iterate through data and print to console OLD DATA
-                    for (var x in data) {
-                        console.log(x, data[x])
+                    for (var x in data[trial]) {
+                        console.log(x, data[trial][x])
                     }
 
                     // Re-hide all new cards and messages
                     $('._card p').hide();
                     $('ul.list-unstyled li').hide();
 
-                    // Create and assign new card values
-                    data = genBlanks();
-                    setCards(data);
-
                     // Task finish condition
                     if (trial == maxTrial) {
                         psiTurk.saveData();
                         finish();
                     }
+
+                    // Update trial number
+                    trial++;
+
+                    // Create and assign new card values, record prior trial for dynamic element
+                    data[trial] = genBlanks();
+                    setCards(data[trial]);
 
                     cardSelected = false;
 
