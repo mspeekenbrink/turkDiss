@@ -2,29 +2,30 @@
 <html>
 	<head>
 		<title>Error</title>
+        <link rel="stylesheet" href="static/css/bootstrap.min.css"/>
 	</head>
 <body >
     {% if errornum == 1008 %}
     	<h2> 
-    	    <p>Sorry, our records indicate that you have attempted to complete this hit, but quit before finishing.<p>
+    	    Sorry, our records indicate that you have attempted to complete this hit, but quit before finishing.
     	</h2>        
     	    <p>Because this is a Psychology experiment, you can only complete this hit once.</p>
     	    <p>Please release the hit so someone else can perform the experiment.</p>
     {% elif errornum == 1010 %}
     	<h2> 
-    	    <p>Sorry, our records indicate that you have already completed (or attempted to complete) this hit.<p>
+    	    Sorry, our records indicate that you have already completed (or attempted to complete) this hit.
     	</h2>        
     	    <p>Because this is a Psychology experiment, you can only complete this hit once.</p>
     	    <p>Please release the hit so someone else can perform the experiment.</p>
     {% else %}
     	<h2> 
-    	    <p>Sorry, there was an unexpected error in our processing of your hit.<p> 
+    	    Sorry, there was an unexpected error in our processing of your hit.
     	</h2>
     {% endif %}
 
             <p>If you would like to receive partial compensation or feel you
             have reached this page in error, please email
-    	    <a href="mailto:gureckislab@gmail.com">gureckislab@gmail.com</a>
+    	    <a href="mailto:psychUC13@gmail.com">psychUC13@gmail.com@gmail.com</a>
     	    and send the following information:</p>
 	    <p>
             Error: #{{ errornum }}<br>
