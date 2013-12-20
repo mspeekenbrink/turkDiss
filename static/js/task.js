@@ -16,11 +16,6 @@ var pages = [
 
 psiTurk.preloadPages(pages);
 
-
-
-
-
-
 // Task object to keep track of the current phase
 var currentview;
 
@@ -93,10 +88,11 @@ var Instructions = function(pages) {
 var TestPhase = function() {
     // Globals
     var cardSelected = false;
+    var initialMu = 50; // Starting value
     var data = {};
-    var trial = 1;
-    var maxTrial = 5;
-    var condition= psiTurk.taskdata.get('condition');
+    var trial = 1; // Initialising trial
+    var maxTrial = 10; // Number of trials
+    var condition= psiTurk.taskdata.get('condition'); // Get condition from server
 
     // Structure of data:
     //  data ==== trialX ==== 'chosen_card'
@@ -140,30 +136,31 @@ var TestPhase = function() {
         // Indicator function assignment
             // Will be NaN on first trial as no prior trials to compare to... Need to compare IDs in case of duplicate numbers
             // Comparing int of html ID tag against string of data element, so need to strip string and turn to int
-            if (data[trial - 1]['chosen_card'] == data[trial - 1][parseInt(card.replace('card',''))]) {
-                var delta1 = 1;
-                var delta2 = 0;
+        var delta1, delta2;
+            if (data[trial - 1]['chosen_card'] == parseInt(card.replace('card',''))) {
+                delta1 = 1;
+                delta2 = 0;
             }
             else {
-                var delta1 = 0;
-                var delta2 = 1;
+                delta1 = 0;
+                delta2 = 1;
             }
-        //data[trial][card]['mu'] = data[trial - 1][card]['mu'] - (6 * data[trial - 1][card]['delta1']) + (2 * data[trial - 1][card]['delta2']) + rnd(1, 1);
-        mu = data[trial - 1][card]['mu'] - (6 * delta1) + (2 * delta2) + rnd(1, 1);
-        //data[trial][card]['R'] = data[trial][card]['mu'] + rnd(1, 1);
-        R = mu + rnd(1, 1);
-        return {R: R,
+        //console.log(card, 'd1=' + delta1, 'd2=' + delta2, 't-1_chosen=' + data[trial - 1]['chosen_card']);
+        mu = data[trial - 1][card]['mu'] - (6 * delta1) + (2 * delta2) + rnd(0, 1);
+        //console.log('card='+card,'mu='+mu, 'data[trial - 1][card]["mu"]='+data[trial - 1][card]['mu'], '(6 * delta1)='+(6 * delta1), '(2 * delta2)='+(2 * delta2));
+        R = mu + rnd(0, 1);
+
+        return {R: Math.round(R),
                 mu: mu
         };
     };
 
-        // Function to generate numbers, stored in data
+        // Function to generate random numbers
 //      var genNumbers = function() {
-//        data[trial] = {};
-//        data[trial]['card1'] = Math.floor(Math.random()*51);
-//        data[trial]['card2'] = Math.floor(Math.random()*51);
-//        data[trial]['card3'] = Math.floor(Math.random()*51);
-//        data[trial]['card4'] = Math.floor(Math.random()*51);
+//          for (var i = 1; i <= 4; i++) {
+//              data[trial]['card' + i] = {};
+//              data[trial]['card' + i]['R'] = Math.floor(Math.random()*51);
+//          }
 //        return data[trial];
 //      };
 
@@ -171,8 +168,9 @@ var TestPhase = function() {
     var genNumbers = function() {
         data[trial] = {};
         for (var i = 1; i <= 4; i++) {
-            data[trial]['card' + i] = {};
-            var values = calcR('card' + i);
+            data[trial]['card' + i] = {}; // Initialising sub-level
+            var values = calcR('card' + i); // Calculate values for each card
+            // Assign values to specific 'card' in 'data'
             data[trial]['card' + i]['R'] = values.R;
             data[trial]['card' + i]['mu'] = values.mu;
         }
@@ -186,7 +184,7 @@ var TestPhase = function() {
         }
     };
 
-    // Function to set cards
+    // Function to set cards,input= data[trial]
     var setCards = function(values) {
         for (var i = 1; i <= 4; i++) {
             $('#' + i).html(values['card' + i]['R']);
@@ -197,32 +195,29 @@ var TestPhase = function() {
 
         // When a card is selected
         $('._card').click(function () {
-            // Get value of selection and refresh
+            // Prevent multiple cards being selected
             if (cardSelected == false) {
                 cardSelected = true;
 
-                // Initialise trial - 1 for the first trial to use. Must initialise all levels
+                // Initialise trial - 1 for first trial to use. Must initialise all levels
                 if (trial == 1) {
                     data[trial - 1] = {};
-                    // Arbitrary, set it to initial positions
+                    // Arbitrary, set it to initial position. 'R' unnecessary
                     for (var i = 1; i <= 4; i++) {
-                        data[trial - 1]['card' + i] = {};
-                        data[trial - 1]['card' + i]['mu'] = 100;
-                        data[trial - 1]['card' + i]['R'] = 100;
+                        data[trial - 1]['card' + i] = {}; // Initialising sub-level
+                        data[trial - 1]['card' + i]['mu'] = initialMu;
                     }
                 }
-
+                // Get and set cards
                 data[trial] = genNumbers();
+                setCards(data[trial]);
 
-                // REMOVE BEFORE GOING LIVE
                 // For testing- iterate through data and print to console OLD DATA
                 for (var x in data[trial]) {
-                    console.log(x, data[trial][x])
+                    console.log(x, data[trial][x]);
                 }
-                console.log(trial);
-
-                // Set cards
-                setCards(data[trial]);
+                console.log('card_sum=' + (data[trial]['card1']['R'] + data[trial]['card2']['R'] + data[trial]['card3']['R'] + data[trial]['card4']['R']));
+                console.log('Trial=' + trial);
 
                 // Show card picked
                 var card = $(this).find('p', 'first');
@@ -250,19 +245,18 @@ var TestPhase = function() {
                     }, 1000);
                 }
 
-                // Save data to psiTurk object
+                // Save data to psiTurk object (via an array)
                 trialSet = [];
-                for (var x in data[trial]) {
-                        trialSet.push(data[trial][x]);
-                    }
-                //No idea if works, you get the idea; iterate through: cards, then R and mu. Now debug.
+                trialSet.push(data[trial]['chosen_card'], data[trial]['chosen_value'], data[trial]['max_value'],
+                              data[trial]['trialNumber'], data[trial]['condition']);
                 for (var y = 1; y <= 4; y++) {
-                    for (var z in data[trial]['card' + y][z])
-                        trialSet.push(data[trial]['card' + y][z]);
-                    }
+                    trialSet.push('Card ' + y + ' R:');
+                    trialSet.push(data[trial]['card' + y]['R']);
+                    trialSet.push('Card ' + y + ' mu:');
+                    trialSet.push(data[trial]['card' + y]['mu']);
+                }
                 psiTurk.recordTrialData(trialSet);
 
-                // Forgone code
                 // Add delay to trials
                 setTimeout(function () {
 
@@ -273,15 +267,13 @@ var TestPhase = function() {
                     // Task finish condition
                     if (trial == maxTrial) {
                         psiTurk.saveData();
+                        //psiTurk.recordBonus(); // How to use?
                         finish();
                     }
 
-                    // Update trial number
-                    trial++;
+                    trial++; // Update trial number
 
-                    // Create and assign new card values, record prior trial for dynamic element
-                    //console.log(data);
-                    setBlanks();
+                    setBlanks(); // Set p tags to '0' to prevent cheating (checking html between trials)
 
                     cardSelected = false;
 

@@ -185,7 +185,7 @@ var PsiTurk = function() {
 	// Add bonus to task data
 	this.recordBonus = function(bonus) {
 		taskdata.set('bonus', bonus);
-	}
+	};
 	
 	// Save data to server
 	this.saveData = function(callbacks) {
